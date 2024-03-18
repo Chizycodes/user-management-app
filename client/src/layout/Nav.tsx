@@ -6,7 +6,7 @@ type NavProps = {
 };
 const Nav = ({ toggleAside }: NavProps) => {
 	return (
-		<div className="navbar dark:bg-gray-900 border-b dark:border-gray-700 border-gray-200 shadow z-20 left-0 lg:left-auto lg:px-10">
+		<div className="navbar shadow z-20 left-0 lg:left-auto lg:px-10">
 			<div className="navbar-start lg:hidden">
 				<Link to="/" className="btn btn-ghost text-primary text-xl">
 					User Management

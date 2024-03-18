@@ -10,7 +10,7 @@ const Aside = () => {
 
 
 	return (
-		<aside className="flex flex-col w-full h-screen px-5 py-8 overflow-y-auto border-r rtl:border-r-0 rtl:border-l bg-gray-900 border-gray-700">
+		<aside className="flex flex-col w-full h-screen px-5 py-8 overflow-y-auto shadow-md">
 			<Link to="/" className="text-primary font-bold text-2xl">
 				User Management
 			</Link>

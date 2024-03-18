@@ -6,9 +6,9 @@ export default {
 	content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
 	theme: {
 		extend: {
-			colors: {
-				primary: '#7862F8',
-			},
+			// colors: {
+			// 	primary: '#7862F8',
+			// },
 		},
 	},
 	plugins: [daisyui],

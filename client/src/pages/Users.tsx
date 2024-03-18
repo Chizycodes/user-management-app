@@ -1,7 +1,9 @@
 const Users = () => {
-  return (
-    <div>Users</div>
-  )
-}
+	return (
+		<div className=" mt-5">
+			Users
+		</div>
+	);
+};
 
-export default Users
+export default Users;
