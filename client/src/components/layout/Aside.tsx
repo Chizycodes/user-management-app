@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { menu } from '../utils';
+import { menu } from '../../utils';
 
 const Aside = () => {
   const {pathname} = useLocation();
@@ -10,8 +10,8 @@ const Aside = () => {
 
 
 	return (
-		<aside className="flex flex-col w-full h-screen px-5 py-8 overflow-y-auto shadow-md">
-			<Link to="/" className="text-primary font-bold text-2xl">
+		<aside className="flex flex-col w-full h-screen px-5 py-8 overflow-y-auto shadow-md bg-primary">
+			<Link to="/" className="text-secondary font-bold text-2xl">
 				User Management
 			</Link>
 
@@ -21,7 +21,7 @@ const Aside = () => {
 						<Link
 							key={index}
 							className={`flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg text-gray-300 hover:bg-gray-800 hover:text-gray-200 ${
-								isActiveLink(item.link) ? 'bg-primary text-white' : ''
+								isActiveLink(item.link) ? 'bg-secondary text-white' : ''
 							}`}
 							to={item.link}
 						>

@@ -23,9 +23,9 @@ const PageLayout = () => {
 			<div className={`lg:w-80 hidden lg:block w-5/6 fixed lg:relative `}>
 				<Aside />
 			</div>
-			<div className={`w-full h-screen overflow-scroll`}>
+			<div className={`w-full h-screen overflow-y-scroll bg-white`}>
 				<Nav toggleAside={() => setShowAside(!showAside)} />
-				<div className="max-w-5xl mx-auto px-5 mb-5">
+				<div className="max-w-5xl mx-auto px-5 mb-5 bg-white">
 					<Outlet />
 				</div>
 			</div>

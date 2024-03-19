@@ -117,7 +117,7 @@ const AddUsers = () => {
 					</div>
 
 					<div className="mt-6">
-						<button type="submit" className="btn btn-primary w-full text-lg font-bold">
+						<button type="submit" className="btn btn-secondary w-full text-lg font-bold">
 							Submit
 							{/* {loading && <span className="loading loading-spinner loading-md"></span>} */}
 						</button>

@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
-import { MenuIcon } from '../assets/svgIcons';
+import { MenuIcon } from '../../assets/svgIcons';
 
 type NavProps = {
 	toggleAside: () => void;
 };
 const Nav = ({ toggleAside }: NavProps) => {
 	return (
-		<div className="navbar shadow z-20 left-0 lg:left-auto lg:px-10">
+		<div className="navbar shadow z-20 left-0 lg:left-auto lg:px-10 bg-primary">
 			<div className="navbar-start lg:hidden">
-				<Link to="/" className="btn btn-ghost text-primary text-xl">
+				<Link to="/" className="btn btn-ghost text-secondary text-xl">
 					User Management
 				</Link>
 			</div>

@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import PageLayout from './layout/PageLayout';
+import PageLayout from './components/layout/PageLayout';
 import AddUsers from './pages/AddUsers';
 import Users from './pages/Users';
 import Error404 from './pages/Error404';
