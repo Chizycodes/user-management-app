@@ -45,7 +45,7 @@ const Users = () => {
 	};
 
 	// Pagination logic
-	const limit = 10;
+	const limit = 8;
 	const totalPages = Math.ceil(users?.length / limit);
 	// Calculate start and end indexes for current page
 	const startIndex = (currentPage - 1) * limit;
