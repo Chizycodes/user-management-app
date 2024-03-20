@@ -8,7 +8,7 @@ This screen allows users to input their personal information such as first name,
 
 ## User Table Screen
 
-Here, users can view a paginated table displaying the list of users. The table columns include first name, last name, phone number, email, and date of birth.
+Here, users can view a paginated table displaying the list of users. Additionally, users have the ability to filter the user list by date of birth. The table columns include first name, last name, phone number, email, and date of birth.
 
 ## Technologies
 
@@ -29,3 +29,7 @@ To set up and run the project locally, follow these steps:
    - Frontend: `cd client && npm run dev`
    - Backend: `cd server && npm start`
 5. Access the application in your web browser.
+
+## Backend API Documentation
+
+For detailed documentation of the API endpoints and their usage, please refer to the [Backend API Documentation](https://documenter.getpostman.com/view/21871844/2sA358d5qw).
