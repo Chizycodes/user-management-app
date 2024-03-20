@@ -9,7 +9,13 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+
+const allowedOrigin = ['https://expat-user-mgt-app.vercel.app', 'http://localhost:5000'];
+app.use(
+	cors({
+		origin: allowedOrigin,
+	})
+);
 
 app.use('/users', router);
 
