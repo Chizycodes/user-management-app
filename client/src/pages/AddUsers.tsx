@@ -2,7 +2,9 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { UserDataType } from '../types/types';
-// import { toast } from 'react-toastify';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
 
 const schema = yup.object().shape({
 	firstName: yup.string().required('First Name is required'),
@@ -21,17 +23,27 @@ const schema = yup.object().shape({
 });
 
 const AddUsers = () => {
+	const [loading, setLoading] = useState(false);
 	const {
 		register,
 		handleSubmit,
-		// reset,
+		reset,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
 	});
 
 	const onSubmit = async (data: UserDataType) => {
-		console.log(data);
+		setLoading(true);
+		try {
+			await axios.post(`${import.meta.env.VITE_API_URL}/users`, data);
+			reset({});
+			toast.success('User created successfully');
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} catch (err: any) {
+			toast.error(err?.response?.data?.message ?? err?.message);
+		}
+		setLoading(false);
 	};
 
 	return (
@@ -43,7 +55,7 @@ const AddUsers = () => {
 							<input
 								type="text"
 								placeholder="First Name"
-                autoComplete='on'
+								autoComplete="on"
 								className={`grow ${errors.firstName ? 'border-red-500' : ''}`}
 								{...register('firstName')}
 							/>
@@ -56,7 +68,7 @@ const AddUsers = () => {
 							<input
 								type="text"
 								placeholder="Last Name"
-                autoComplete='on'
+								autoComplete="on"
 								className={`grow ${errors.lastName ? 'border-red-500' : ''}`}
 								{...register('lastName')}
 							/>
@@ -69,7 +81,7 @@ const AddUsers = () => {
 							<input
 								type="tel"
 								placeholder="Phone Number"
-                autoComplete='on'
+								autoComplete="on"
 								className={`grow ${errors.phoneNumber ? 'border-red-500' : ''}`}
 								{...register('phoneNumber')}
 							/>
@@ -82,7 +94,7 @@ const AddUsers = () => {
 							<input
 								type="email"
 								placeholder="Email"
-                autoComplete='on'
+								autoComplete="on"
 								className={`grow ${errors.email ? 'border-red-500' : ''}`}
 								{...register('email')}
 							/>
@@ -95,7 +107,7 @@ const AddUsers = () => {
 							<input
 								type="password"
 								placeholder="Password"
-                autoComplete='on'
+								autoComplete="on"
 								className={`grow ${errors.password ? 'border-red-500' : ''}`}
 								{...register('password')}
 							/>
@@ -108,7 +120,7 @@ const AddUsers = () => {
 							<input
 								type="date"
 								placeholder="Date of Birth"
-                autoComplete='on'
+								autoComplete="on"
 								className={`grow ${errors.dateOfBirth ? 'border-red-500' : ''}`}
 								{...register('dateOfBirth')}
 							/>
@@ -117,9 +129,9 @@ const AddUsers = () => {
 					</div>
 
 					<div className="mt-6">
-						<button type="submit" className="btn btn-secondary w-full text-lg font-bold">
+						<button type="submit" disabled={loading} className="btn btn-secondary w-full text-lg font-bold">
 							Submit
-							{/* {loading && <span className="loading loading-spinner loading-md"></span>} */}
+							{loading && <span className="loading loading-spinner loading-md"></span>}
 						</button>
 					</div>
 				</form>

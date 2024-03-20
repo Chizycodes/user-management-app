@@ -5,4 +5,5 @@ export type UserDataType = {
 	email: string;
 	password: string;
 	dateOfBirth: string;
+	_id?: string;
 };
