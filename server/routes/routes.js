@@ -33,13 +33,15 @@ router.post('/', async (req, res) => {
 
 // Update a user
 router.patch('/:id', async (req, res) => {
+	const id = req.params.id;
+	const userExists = await UserModel.findById(id);
+	if (!userExists) {
+		return res.status(400).json({ status: 'error', message: `User with id ${id} does not exist` });
+	}
 	try {
-		const id = req.params.id;
 		const updatedData = req.body;
 		const options = { new: true };
-
 		const data = await UserModel.findByIdAndUpdate(id, updatedData, options);
-
 		res.status(201).json(data);
 	} catch (error) {
 		res.status(400).json({ status: 'error', message: error.message });
@@ -48,10 +50,15 @@ router.patch('/:id', async (req, res) => {
 
 //Delete user by id
 router.delete('/:id', async (req, res) => {
+	const id = req.params.id;
+	const userExists = await UserModel.findById(id);
+
+	if (!userExists) {
+		return res.status(400).json({ status: 'error', message: `User with id ${id} does not exist` });
+	}
 	try {
-		const id = req.params.id;
 		const data = await UserModel.findByIdAndDelete(id);
-		res.status(200).json(`User with email ${data.email} deleted`);
+		res.status(200).json({ status: 'success', message: `User with email ${data.email} deleted` });
 	} catch (error) {
 		res.status(400).json({ status: 'error', message: error.message });
 	}
