@@ -1,7 +1,7 @@
 export const menu = [
   {
     id: 1,
-    title: 'Add User',
+    title: 'Create User',
     link: '/',
   },
   {
