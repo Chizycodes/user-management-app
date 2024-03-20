@@ -7,7 +7,23 @@ const router = express.Router();
 // Get all users
 router.get('/', async (req, res) => {
 	try {
-		const data = await UserModel.find();
+		// Extract query parameters for date of birth range filtering
+		const { minDOB, maxDOB } = req.query;
+
+		let query = {};
+
+		// If both minDOB and maxDOB parameters are provided, add date of birth range filtering to the query
+		if (minDOB && maxDOB) {
+			query.dateOfBirth = { $gte: new Date(minDOB), $lte: new Date(maxDOB) };
+		} else if (minDOB) {
+			// If only minDOB parameter is provided, add minimum date of birth filtering
+			query.dateOfBirth = { $gte: new Date(minDOB) };
+		} else if (maxDOB) {
+			// If only maxDOB parameter is provided, add maximum date of birth filtering
+			query.dateOfBirth = { $lte: new Date(maxDOB) };
+		}
+
+		const data = await UserModel.find(query);
 		res.json(data);
 	} catch (error) {
 		res.status(500).json({ message: error.message });
