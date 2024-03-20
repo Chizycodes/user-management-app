@@ -6,34 +6,41 @@ import { DateFilterType } from '../types/types';
 const schema = yup.object().shape({
 	startDate: yup.date(),
 	endDate: yup.date().when('startDate', (startDate, schema) => {
-		return startDate ? schema.min(startDate, 'End Date must be after Start Date') : schema;
+		return startDate ? schema.min(startDate, 'Start date cannot be greater than End date') : schema;
 	}),
 });
 
 const FilterModal = ({
 	onDateRangeChange,
 	loading,
+	isModal,
+	setModal,
 }: {
 	onDateRangeChange: (startDate?: null | Date, endDate?: null | Date) => void;
 	loading: boolean;
+	isModal: boolean;
+	setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	const {
 		register,
 		handleSubmit,
+		reset,
 		formState: { errors },
 	} = useForm({
 		resolver: yupResolver(schema),
 	});
 
-	const onSubmit = (data: DateFilterType) => {
+	const onSubmit = async (data: DateFilterType) => {
 		onDateRangeChange(data.startDate, data.endDate);
 	};
 
 	return (
-		<dialog id="filter-modal" className="modal">
+		<dialog id="filter-modal" className={`modal ${isModal ? 'modal-open' : ''}`}>
 			<div className="modal-box">
 				<form method="dialog">
-					<button className="btn btn-sm btn-ghost absolute right-2 top-2">✕</button>
+					<button className="btn btn-sm btn-ghost absolute right-2 top-2" onClick={() => setModal(false)}>
+						✕
+					</button>
 				</form>
 				<h3 className="font-bold text-lg">Filter By</h3>
 				<div>
@@ -57,12 +64,18 @@ const FilterModal = ({
 										{...register('endDate')}
 										className={`grow input input-bordered ${errors.endDate ? 'border-red-500' : ''}`}
 									/>
+									
 								</div>
 							</div>
+							{errors.endDate && <p className="text-red-500 text-sm mt-1 pl-2">{errors.endDate.message}</p>}
 
 							<div className="modal-action">
+								{loading && <span className="loading loading-spinner loading-md"></span>}
 								<button
-									onClick={() => onDateRangeChange(null, null)}
+									onClick={() => {
+										reset();
+										onSubmit({});
+									}}
 									disabled={loading}
 									className="btn btn-primary btn-outline"
 								>
@@ -70,7 +83,6 @@ const FilterModal = ({
 								</button>
 								<button type="submit" disabled={loading} className="btn btn-primary">
 									Apply
-									{loading && <span className="loading loading-spinner loading-md"></span>}
 								</button>
 							</div>
 						</div>

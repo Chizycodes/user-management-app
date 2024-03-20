@@ -13,6 +13,7 @@ const Users = () => {
 	const [users, setUsers] = useState([]);
 	const [dobRange, setDobRange] = useState<DateFilterType>({ startDate: null, endDate: null });
 	const [currentPage, setCurrentPage] = useState(1);
+	const [isModal, setModal] = useState(false);
 
 	const fetchUsers = async () => {
 		setLoading(true);
@@ -21,6 +22,7 @@ const Users = () => {
 				params: { minDOB: dobRange.startDate, maxDOB: dobRange.endDate },
 			});
 			setUsers(res.data);
+			setModal(false);
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
 			toast.error(err?.response?.data?.message ?? err?.message);
@@ -35,7 +37,7 @@ const Users = () => {
 
 	useEffect(() => {
 		fetchUsers();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [dobRange]);
 
 	const handleDateRangeChange = (startDate?: Date | null, endDate?: Date | null) => {
@@ -50,13 +52,13 @@ const Users = () => {
 	const endIndex = startIndex + limit;
 	// Slice users array to display users for current page
 	const usersForPage = users.slice(startIndex, endIndex);
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const filterModal: any = document.getElementById('filter-modal');
 	return (
 		<div className="mt-5">
-			<div className='flex justify-between px-3'>
+			<div className="flex justify-between px-3">
 				<h1 className="text-xl font-bold mb-5 text-gray-700">Users</h1>
-				<span onClick={()=>filterModal?.showModal()}><FilterIcon /></span>
+				<span className="cursor-pointer" onClick={() => setModal(true)}>
+					<FilterIcon />
+				</span>
 			</div>
 			<div className="overflow-x-auto">
 				{loading ? (
@@ -71,6 +73,7 @@ const Users = () => {
 								<th>Email</th>
 								<th>Phone Number</th>
 								<th>Date of Birth</th>
+								{/* <th></th> */}
 							</tr>
 						</thead>
 						<tbody>
@@ -80,6 +83,7 @@ const Users = () => {
 									<td>{user.email}</td>
 									<td>{user.phoneNumber}</td>
 									<td>{moment(user.dateOfBirth).format('Do MMM YYYY')}</td>
+									{/* <td></td> */}
 								</tr>
 							))}
 						</tbody>
@@ -96,7 +100,7 @@ const Users = () => {
 					</div>
 				)}
 			</div>
-			<FilterModal onDateRangeChange={handleDateRangeChange} loading={loading}/>
+			<FilterModal onDateRangeChange={handleDateRangeChange} loading={loading} isModal={isModal} setModal={setModal} />
 		</div>
 	);
 };
