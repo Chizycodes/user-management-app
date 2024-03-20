@@ -13,7 +13,7 @@ Here, users can view a paginated table displaying the list of users. Additionall
 ## Technologies
 
 - **Backend:** NodeJS / Express
-- **Frontend:** React
+- **Frontend:** React TypeScript
 - **Database:** MongoDB
 
 ## Setup Instructions
