@@ -10,7 +10,7 @@ const app = express();
 
 app.use(express.json());
 
-const allowedOrigin = ['https://expat-user-mgt-app.vercel.app', 'http://localhost:5000'];
+const allowedOrigin = ['https://expat-user-mgt-app.vercel.app', 'http://localhost:5173'];
 app.use(
 	cors({
 		origin: allowedOrigin,
