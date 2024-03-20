@@ -10,9 +10,9 @@ const Aside = () => {
 
 
 	return (
-		<aside className="flex flex-col w-full h-screen px-5 py-8 overflow-y-auto shadow-md bg-primary">
+		<aside className="flex flex-col w-full h-screen px-5 py-5 overflow-y-auto shadow-md bg-primary">
 			<Link to="/" className="text-secondary font-bold text-2xl">
-				User Management
+				User Mgt
 			</Link>
 
 			<div className="flex flex-col justify-between flex-1 mt-6">
@@ -20,8 +20,8 @@ const Aside = () => {
 					{menu.map((item, index) => (
 						<Link
 							key={index}
-							className={`flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg text-gray-300 hover:bg-gray-800 hover:text-gray-200 ${
-								isActiveLink(item.link) ? 'bg-secondary text-white' : ''
+							className={`flex items-center px-3 py-2 transition-colors duration-300 transform rounded-lg text-white ${
+								isActiveLink(item.link) ? 'bg-secondary' : ''
 							}`}
 							to={item.link}
 						>

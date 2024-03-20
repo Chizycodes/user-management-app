@@ -3,10 +3,13 @@ import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { UserDataType } from '../types/types';
 import moment from 'moment';
+import Pagination from 'react-responsive-pagination';
+import 'react-responsive-pagination/themes/classic.css';
 
 const Users = () => {
 	const [loading, setLoading] = useState(true);
 	const [users, setUsers] = useState([]);
+	const [currentPage, setCurrentPage] = useState(1);
 
 	const fetchUsers = async () => {
 		setLoading(true);
@@ -20,12 +23,27 @@ const Users = () => {
 		setLoading(false);
 	};
 
+	const handlePageChange = (newPage: number) => {
+		setCurrentPage(newPage);
+		console.log(newPage);
+	};
+
 	useEffect(() => {
 		fetchUsers();
 	}, []);
+
+	// Pagination logic
+	const limit = 10;
+	const totalPages = Math.ceil(users?.length / limit);
+	// Calculate start and end indexes for current page
+	const startIndex = (currentPage - 1) * limit;
+	const endIndex = startIndex + limit;
+	// Slice users array to display users for current page
+	const usersForPage = users.slice(startIndex, endIndex);
+
 	return (
 		<div className="mt-5">
-			<h1 className='text-xl font-bold text-center mb-5 text-gray-700'>Users</h1>
+			<h1 className="text-xl font-bold text-center mb-5 text-gray-700">Users</h1>
 			<div className="overflow-x-auto">
 				{loading ? (
 					<div className="flex justify-center mt-5">
@@ -42,7 +60,7 @@ const Users = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{users.map((user: UserDataType) => (
+							{usersForPage?.map((user: UserDataType) => (
 								<tr key={user._id}>
 									<th>{`${user.firstName} ${user.lastName}`}</th>
 									<td>{user.email}</td>
@@ -55,6 +73,12 @@ const Users = () => {
 				) : (
 					<div className="flex justify-center mt-5">
 						<p className="font-medium text-lg">No user found</p>
+					</div>
+				)}
+
+				{users.length > 0 && (
+					<div className="flex justify-end mt-5 pagination">
+						<Pagination current={currentPage} total={totalPages} onPageChange={handlePageChange} />
 					</div>
 				)}
 			</div>
