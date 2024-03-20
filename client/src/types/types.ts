@@ -7,3 +7,8 @@ export type UserDataType = {
 	dateOfBirth: string;
 	_id?: string;
 };
+
+export type DateFilterType = {
+	startDate?: null | Date;
+	endDate?: null | Date;
+};

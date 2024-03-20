@@ -1,20 +1,25 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import { UserDataType } from '../types/types';
+import { DateFilterType, UserDataType } from '../types/types';
 import moment from 'moment';
 import Pagination from 'react-responsive-pagination';
 import 'react-responsive-pagination/themes/classic.css';
+import { FilterIcon } from '../assets/svgIcons';
+import FilterModal from '../components/FilterModal';
 
 const Users = () => {
 	const [loading, setLoading] = useState(true);
 	const [users, setUsers] = useState([]);
+	const [dobRange, setDobRange] = useState<DateFilterType>({ startDate: null, endDate: null });
 	const [currentPage, setCurrentPage] = useState(1);
 
 	const fetchUsers = async () => {
 		setLoading(true);
 		try {
-			const res = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
+			const res = await axios.get(`${import.meta.env.VITE_API_URL}/users`, {
+				params: { minDOB: dobRange.startDate, maxDOB: dobRange.endDate },
+			});
 			setUsers(res.data);
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
@@ -30,7 +35,12 @@ const Users = () => {
 
 	useEffect(() => {
 		fetchUsers();
-	}, []);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [dobRange]);
+
+	const handleDateRangeChange = (startDate?: Date | null, endDate?: Date | null) => {
+		setDobRange({ startDate, endDate });
+	};
 
 	// Pagination logic
 	const limit = 10;
@@ -40,10 +50,14 @@ const Users = () => {
 	const endIndex = startIndex + limit;
 	// Slice users array to display users for current page
 	const usersForPage = users.slice(startIndex, endIndex);
-
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const filterModal: any = document.getElementById('filter-modal');
 	return (
 		<div className="mt-5">
-			<h1 className="text-xl font-bold text-center mb-5 text-gray-700">Users</h1>
+			<div className='flex justify-between px-3'>
+				<h1 className="text-xl font-bold mb-5 text-gray-700">Users</h1>
+				<span onClick={()=>filterModal?.showModal()}><FilterIcon /></span>
+			</div>
 			<div className="overflow-x-auto">
 				{loading ? (
 					<div className="flex justify-center mt-5">
@@ -82,6 +96,7 @@ const Users = () => {
 					</div>
 				)}
 			</div>
+			<FilterModal onDateRangeChange={handleDateRangeChange} loading={loading}/>
 		</div>
 	);
 };
