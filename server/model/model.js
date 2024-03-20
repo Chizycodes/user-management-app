@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
 	firstName: {
@@ -22,6 +22,8 @@ const userSchema = new mongoose.Schema({
 	password: {
 		type: String,
 		required: true,
+		minlength: 8,
+		select: false,
 	},
 	dateOfBirth: {
 		type: Date,
