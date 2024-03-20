@@ -9,7 +9,10 @@ import { useState } from 'react';
 const schema = yup.object().shape({
 	firstName: yup.string().required('First Name is required'),
 	lastName: yup.string().required('Last Name is required'),
-	phoneNumber: yup.string().required('Phone Number is required'),
+	phoneNumber: yup
+		.string()
+		.required('Phone Number is required')
+		.matches(/^\+(?:[0-9] ?){6,14}[0-9]$/, 'Please enter a valid phone number.'),
 	email: yup.string().email('Invalid email').required('Email is required'),
 	password: yup
 		.string()
@@ -37,7 +40,7 @@ const AddUsers = () => {
 		setLoading(true);
 		try {
 			await axios.post(`${import.meta.env.VITE_API_URL}/users`, data);
-			reset({});
+			reset();
 			toast.success('User created successfully');
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		} catch (err: any) {
@@ -49,7 +52,8 @@ const AddUsers = () => {
 	return (
 		<div className="flex justify-center w-full mt-5">
 			<div className="max-w-xl w-full">
-				<form className="flex flex-col gap-5" onSubmit={handleSubmit(onSubmit)}>
+				<h1 className="text-xl font-bold text-center mb-5 text-gray-700">Create User</h1>
+				<form className="flex flex-col gap-3" onSubmit={handleSubmit(onSubmit)}>
 					<div>
 						<label className="input input-bordered flex items-center gap-2">
 							<input
@@ -128,7 +132,7 @@ const AddUsers = () => {
 						{errors.dateOfBirth && <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth.message}</p>}
 					</div>
 
-					<div className="mt-6">
+					<div className="mt-4">
 						<button type="submit" disabled={loading} className="btn btn-secondary w-full text-lg font-bold">
 							Submit
 							{loading && <span className="loading loading-spinner loading-md"></span>}

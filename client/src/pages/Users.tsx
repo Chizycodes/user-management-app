@@ -25,6 +25,7 @@ const Users = () => {
 	}, []);
 	return (
 		<div className="mt-5">
+			<h1 className='text-xl font-bold text-center mb-5 text-gray-700'>Users</h1>
 			<div className="overflow-x-auto">
 				{loading ? (
 					<div className="flex justify-center mt-5">
